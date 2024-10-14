@@ -149,6 +149,10 @@ func normalizeAlgorithm(rt *sobek.Runtime, v sobek.Value, op AlgorithmIdentifier
 	// A registered algorithm provided in lower case format, should
 	// be considered valid.
 	algorithm.Name = strings.ToUpper(algorithm.Name)
+	// Except for RSASSA-PKCS1-v1_5, it's not upper cased.
+	if algorithm.Name == strings.ToUpper(RSASsaPkcs1v15) {
+		algorithm.Name = RSASsaPkcs1v15
+	}
 
 	if !isRegisteredAlgorithm(algorithm.Name, op) {
 		return Algorithm{}, NewError(NotSupportedError, "unsupported algorithm: "+algorithm.Name)
