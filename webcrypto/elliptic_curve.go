@@ -510,6 +510,9 @@ type ECDSAParams struct {
 	Hash Algorithm
 }
 
+// Ensure that ECDSAParams implements the SignerVerifier interface.
+var _ SignerVerifier = (*ECDSAParams)(nil)
+
 func newECDSAParams(rt *sobek.Runtime, normalized Algorithm, params sobek.Value) (*ECDSAParams, error) {
 	hashValue, err := traverseObject(rt, params, "hash")
 	if err != nil {
